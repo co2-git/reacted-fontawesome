@@ -3,6 +3,28 @@
 import React from 'react';
 
 class Row extends React.Component {
+  renderChildren () {
+    return React.Children.map(this.props.children, child => {
+      const childProps = Object.assign({}, child.props);
+
+      let { style } = childProps;
+
+      if ( ( 'flex-grow' in childProps ) ) {
+        if ( ! style ) {
+          childProps.style = {};
+        }
+        if ( typeof childProps['flex-grow'] === 'number' ) {
+          childProps.style.flexGrow = childProps['flex-grow'];
+        }
+        else {
+          childProps.style.flexGrow = 2;
+        }
+      }
+
+      return React.cloneElement(child, childProps);
+    });
+  }
+
   render () {
     let style = {
       display : 'flex',
@@ -53,7 +75,7 @@ class Row extends React.Component {
 
     return (
       <div style={ style }>
-        { this.props.children }
+        { this.renderChildren() }
       </div>
     );
   }

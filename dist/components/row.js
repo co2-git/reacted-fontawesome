@@ -28,6 +28,28 @@ var Row = (function (_React$Component) {
   }
 
   _createClass(Row, [{
+    key: 'renderChildren',
+    value: function renderChildren() {
+      return _react2['default'].Children.map(this.props.children, function (child) {
+        var childProps = Object.assign({}, child.props);
+
+        var style = childProps.style;
+
+        if ('flex-grow' in childProps) {
+          if (!style) {
+            childProps.style = {};
+          }
+          if (typeof childProps['flex-grow'] === 'number') {
+            childProps.style.flexGrow = childProps['flex-grow'];
+          } else {
+            childProps.style.flexGrow = 2;
+          }
+        }
+
+        return _react2['default'].cloneElement(child, childProps);
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
       var style = {
@@ -76,7 +98,7 @@ var Row = (function (_React$Component) {
       return _react2['default'].createElement(
         'div',
         { style: style },
-        this.props.children
+        this.renderChildren()
       );
     }
   }]);

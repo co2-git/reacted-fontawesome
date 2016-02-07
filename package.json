@@ -1,6 +1,6 @@
 {
   "name": "reacted-flex",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "reacted-flex ===",
   "main": "dist/index.js",
   "scripts": {

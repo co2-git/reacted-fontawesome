@@ -14,7 +14,7 @@ import Flex from 'reacted-flex';
 class Layout extends React.Component {
   render () {
     return (
-      <Flex inline column>
+      <Flex wrap justify-content="space-between">
         <img flex-grow="5" />
         <img flex-shrink="0" flex-basis="300px" />
         <img flex-align="end" />

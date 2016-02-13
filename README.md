@@ -9,64 +9,213 @@ React components to use with CSS3 Flexbox
 
 ```js
 import React from 'react';
-import { Row } from 'reacted-flex';
+import Flex from 'reacted-flex';
 
 class Layout extends React.Component {
   render () {
     return (
-      <Row justify="between" baseline>
+      <Flex inline column>
         <img flex-grow="5" />
         <img flex-shrink="0" flex-basis="300" />
         <img flex-align="end" />
-      </Row>
+      </Flex>
     );
   }
 }
 ```
 
-# Row Attributes
+# Container
 
-## Inline
+## display
+
+### { display : flex }
 
 ```html
-<Row inline />
+<Flex />
 ```
 
-## Reverse
+### { display : inline-flex }
 
 ```html
-<Row reverse />
+<Flex inline />
 ```
 
-## Wrap
+## flex-direction
 
-Defaults to `wrap=false`.
+### { flex-direction : column }
 
 ```html
-<Row wrap /> <!-- wrap -->
-<Row wrap={false} /> <!-- no wrap -->
-<Row wrap-reverse /> <!-- wrap reverse -->
+<Flex column />
+<Flex stack />
 ```
 
-## Justify content
-
-You can use either the `justify-content` or the `justify` attributes.
-
-The following aliases are accepted:
-
-- start (for flex-start)
-- end ( for flex-end)
-- between (for space-between)
-- around (for space-around)
+### { flex-direction : reverse }
 
 ```html
-<Row justify-content={String} />
+<Flex reverse />
 ```
 
-## Align items
-
-You can use the `justify-content` or the `justify` attribute
+### { flex-direction : column-reverse }
 
 ```html
-<Row align={String} />
+<Flex column reverse />
+<Flex column-reverse />
+```
+
+## flex-wrap
+
+### { flex-wrap : no-wrap }
+
+```html
+<Flex no-wrap />
+<Flex wrap={false} />
+```
+
+### { flex-wrap : wrap }
+
+```html
+<Flex wrap />
+<Flex wrap={true} />
+```
+
+### { flex-wrap : wrap-reverse }
+
+```html
+<Flex wrap reverse />
+<Flex wrap-reverse />
+```
+
+## justify-content
+
+### { justify-content : flex-start }
+
+```html
+<Flex justify-content="flex-start" />
+```
+
+### { justify-content : flex-end }
+
+```html
+<Flex justify-content="flex-end" />
+```
+
+### { justify-content : center }
+
+```html
+<Flex justify-content="center" />
+```
+
+### { justify-content : space-between }
+
+```html
+<Flex justify-content="space-between" />
+```
+
+### { justify-content : space-around }
+
+```html
+<Flex justify-content="space-around" />
+```
+
+## align-items
+
+### { align-items : stretch }
+
+```html
+<Flex align-items="stretch" />
+```
+
+### { align-items : flex-start }
+
+```html
+<Flex align-items="flex-start" />
+```
+
+### { align-items : flex-end }
+
+```html
+<Flex align-items="flex-end" />
+```
+
+### { align-items : center }
+
+```html
+<Flex align-items="center" />
+```
+
+### { align-items : baseline }
+
+```html
+<Flex align-items="baseline" />
+```
+
+## align-content
+
+### { align-content : stretch }
+
+```html
+<Flex align-content="stretch" />
+```
+
+### { align-content : flex-start }
+
+```html
+<Flex align-content="flex-start" />
+```
+
+### { align-content : flex-end }
+
+```html
+<Flex align-content="flex-end" />
+```
+
+### { align-content : center }
+
+```html
+<Flex align-content="center" />
+```
+
+### { align-content : space-between }
+
+```html
+<Flex align-content="space-between" />
+```
+
+### { align-content : space-around }
+
+```html
+<Flex align-content="space-around" />
+```
+
+## Item
+
+### { order : <integer> }
+
+```html
+<div flex-order={Number} />
+```
+
+### { flex-grow : <integer> }
+
+```html
+<div flex-grow={Number} />
+```
+
+### { flex-shrink : <integer> }
+
+```html
+<div flex-shrink={Number} />
+```
+
+### { flex-basis : <width> }
+
+```html
+<div flex-basis={String} />
+```
+
+### { align-self : <auto | flex-start | flex-end | center | baseline | stretch> }
+
+```html
+<div flex-align={String} />
+<div flex-align-self={String} />
 ```

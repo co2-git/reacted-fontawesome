@@ -16,7 +16,7 @@ class Layout extends React.Component {
     return (
       <Flex inline column>
         <img flex-grow="5" />
-        <img flex-shrink="0" flex-basis="300" />
+        <img flex-shrink="0" flex-basis="300px" />
         <img flex-align="end" />
       </Flex>
     );
@@ -59,7 +59,6 @@ class Layout extends React.Component {
 
 ```html
 <Flex column reverse />
-<Flex column-reverse />
 ```
 
 ## flex-wrap
@@ -67,7 +66,6 @@ class Layout extends React.Component {
 ### { flex-wrap : no-wrap }
 
 ```html
-<Flex no-wrap />
 <Flex wrap={false} />
 ```
 
@@ -81,7 +79,7 @@ class Layout extends React.Component {
 ### { flex-wrap : wrap-reverse }
 
 ```html
-<Flex wrap reverse />
+<Flex wrap="reverse" />
 <Flex wrap-reverse />
 ```
 
@@ -217,5 +215,4 @@ class Layout extends React.Component {
 
 ```html
 <div flex-align={String} />
-<div flex-align-self={String} />
 ```

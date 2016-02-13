@@ -3,78 +3,131 @@
 import React from 'react';
 
 class Flex extends React.Component {
+
+  static propTypes      =     {
+    "inline"            :     React.PropTypes.bool,
+    "column"            :     React.PropTypes.bool,
+    "stack"             :     React.PropTypes.bool,
+    "reverse"           :     React.PropTypes.bool,
+    "wrap"              :     React.PropTypes.oneOfType([
+      React.PropTypes.bool,
+      React.PropTypes.string
+    ]),
+    "justify-content"   :     React.PropTypes.string,
+    "align-items"       :     React.PropTypes.string,
+    "align-content"     :     React.PropTypes.string
+  };
+
   renderChildren () {
     return React.Children.map(this.props.children, child => {
       const childProps = Object.assign({}, child.props);
 
-      let { style } = childProps;
-
-      if ( ( 'flex-grow' in childProps ) ) {
-        if ( ! style ) {
+      if ( ( 'flex-order' in childProps ) ) {
+        if ( ! childProps.style ) {
           childProps.style = {};
         }
-        if ( typeof childProps['flex-grow'] === 'number' ) {
-          childProps.style.flexGrow = childProps['flex-grow'];
+        childProps.style.order = childProps.order;
+      }
+
+      if ( ( 'flex-grow' in childProps ) ) {
+        if ( ! childProps.style ) {
+          childProps.style = {};
         }
-        else {
-          childProps.style.flexGrow = 2;
+        childProps.style.flexGrow = childProps['flex-grow'];
+      }
+
+      if ( ( 'flex-shrink' in childProps ) ) {
+        if ( ! childProps.style ) {
+          childProps.style = {};
         }
+        childProps.style.flexShrink = childProps['flex-shrink'];
+      }
+
+      if ( ( 'flex-basis' in childProps ) ) {
+        if ( ! childProps.style ) {
+          childProps.style = {};
+        }
+        childProps.style.flexBasis = childProps['flex-basis'];
+      }
+
+      if ( ( 'align' in childProps ) ) {
+        if ( ! childProps.style ) {
+          childProps.style = {};
+        }
+        childProps.style.alignSelf = childProps['align'];
       }
 
       return React.cloneElement(child, childProps);
     });
   }
 
-  render () {
-    let style = {
-      display : 'flex',
-      flexDirection : 'row'
+  style () {
+    const {
+      inline,
+      column,
+      stack,
+      reverse,
+      wrap
+    } = this.props;
+
+    const noWrap              =   this.props['no-wrap'];
+    const justifyContent      =   this.props['justify-content'];
+    const alignItems          =   this.props['align-items'];
+    const alignContent        =   this.props['align-content'];
+
+    const style               =   {
+      display                 :   'flex',
+      flexDirection           :   'row'
     };
 
-    if ( this.props.inline ) {
+    if ( inline ) {
       style.display = 'inline-flex';
     }
 
-    if ( this.props.reverse ) {
-      style.flexDirection = 'row-reverse';
+    if ( column || stack ) {
+      style.flexDirection = 'column';
     }
 
-    if ( 'wrap' in this.props ) {
-      if ( this.props.wrap ) {
-        style.flexWrap = 'wrap';
+    if ( reverse ) {
+      if ( column || stack ) {
+        style.flexDirection = 'column-reverse';
       }
       else {
-        style.flexWrap = 'nowrap';
+        style.flexDirection = 'row-reverse';
       }
     }
 
-    if ( this.props['wrap-reverse'] ) {
-      style.flexWrap = 'wrap-reverse';
+    if ( wrap ) {
+      if ( wrap === 'reverse' ) {
+        style.flexWrap = 'wrap-reverse';
+      }
+      else {
+        style.flexWrap = 'wrap';
+      }
     }
 
-    if ( this.props['justify-content'] ) {
-      this.props.justify = this.props['justify-content'];
+    if ( wrap === false ) {
+      style.flexWrap = 'nowrap';
     }
 
-    if ( this.props.justify ) {
-      if ( this.props.justify === 'start' ) {
-        this.props.justify = 'flex-start';
-      }
-      else if ( this.props.justify === 'end' ) {
-        this.props.justify = 'flex-end';
-      }
-      else if ( this.props.justify === 'between' ) {
-        this.props.justify = 'space-between';
-      }
-      else if ( this.props.justify === 'around' ) {
-        this.props.justify = 'space-around';
-      }
-
-      style.justifyContent = this.props.justify;
+    if ( justifyContent ) {
+      style.justifyContent = justifyContent;
     }
 
+    if ( alignItems ) {
+      style.alignItems = alignItems;
+    }
+
+    if ( alignContent ) {
+      style.alignContent = alignContent;
+    }
+
+    return style;
+  }
+
+  render () {
     return (
-      <div style={ style }>
+      <div style={ this.style() }>
         { this.renderChildren() }
       </div>
     );

@@ -1,8 +1,8 @@
 {
   "name": "reacted-flex",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "reacted-flex ===",
-  "main": "dist/index.js",
+  "main": "dist/components/flex.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "babel": "babel --out-dir dist app",

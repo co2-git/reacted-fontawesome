@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require('react');
@@ -92,6 +94,8 @@ var Flex = function (_React$Component) {
         flexDirection: 'row'
       };
 
+      Object.assign(style, this.props.style, style);
+
       if (inline) {
         style.display = 'inline-flex';
       }
@@ -139,7 +143,7 @@ var Flex = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { style: this.style() },
+        _extends({}, this.props, { style: this.style() }),
         this.renderChildren()
       );
     }

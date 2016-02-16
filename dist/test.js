@@ -20,6 +20,8 @@ var _css = require('css');
 
 var _css2 = _interopRequireDefault(_css);
 
+var _xmldom = require('xmldom');
+
 var _server = require('react-dom/server');
 
 var _server2 = _interopRequireDefault(_server);
@@ -35,6 +37,12 @@ function test() {
 
   var locals = {};
 
+  function getDOMNode(props) {
+    var rendered = _server2.default.renderToString(_react2.default.createFactory(_flex2.default)(props));
+
+    return new _xmldom.DOMParser().parseFromString(rendered, 'text/html');
+  }
+
   function check() {
     var props = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
     var rules = arguments.length <= 1 || arguments[1] === undefined ? [] : arguments[1];
@@ -46,7 +54,7 @@ function test() {
       });
 
       it('should render', function () {
-        locals.rendered = _server2.default.renderToString(_react2.default.createFactory(_flex2.default)({}));
+        locals.rendered = _server2.default.renderToString(_react2.default.createFactory(_flex2.default)(props));
       });
 
       it('should have style', function () {
@@ -110,6 +118,17 @@ function test() {
         declarations: [{ display: 'flex' }, { 'flex-direction': 'row' }]
       }]);
     }));
+
+    it('<Flex data-some="attribute" />', function (it) {
+      it('should have attribute', function () {
+        var domNode = getDOMNode({ 'data-some': 'attribute' }).documentElement;
+        Object.keys(domNode.attributes).filter(function (i) {
+          return domNode.attributes[i].name;
+        }).map(function (i) {
+          return domNode.attributes[i].name;
+        }).indexOf('data-some').should.be.above(-1);
+      });
+    });
   });
 }
 

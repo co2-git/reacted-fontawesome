@@ -75,10 +75,12 @@ class Flex extends React.Component {
     const alignItems          =   this.props['align-items'];
     const alignContent        =   this.props['align-content'];
 
-    const style               =   {
+    let style                 =   {
       display                 :   'flex',
       flexDirection           :   'row'
     };
+
+    Object.assign(style, this.props.style, style);
 
     if ( inline ) {
       style.display = 'inline-flex';
@@ -127,7 +129,7 @@ class Flex extends React.Component {
 
   render () {
     return (
-      <div style={ this.style() }>
+      <div { ...this.props } style={ this.style() }>
         { this.renderChildren() }
       </div>
     );

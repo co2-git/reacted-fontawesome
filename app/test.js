@@ -4,11 +4,20 @@ import describe           from 'redtea';
 import should             from 'should';
 import React              from 'react';
 import css                from 'css';
+import { DOMParser }      from 'xmldom';
 import ReactDOMServer     from 'react-dom/server';
 import Flex               from './components/flex';
 
 function test(props = {}) {
   const locals = {};
+
+  function getDOMNode (props) {
+    const rendered = ReactDOMServer.renderToString(
+      React.createFactory(Flex)(props)
+    );
+
+    return new DOMParser().parseFromString(rendered, 'text/html');
+  }
 
   function check (props = {}, rules = []) {
     return it => {
@@ -19,7 +28,7 @@ function test(props = {}) {
 
       it('should render', () => {
         locals.rendered = ReactDOMServer.renderToString(
-          React.createFactory(Flex)({})
+          React.createFactory(Flex)(props)
         );
       });
 
@@ -102,6 +111,17 @@ function test(props = {}) {
         }
       ]
     )));
+
+    it('<Flex data-some="attribute" />', it => {
+      it('should have attribute', () => {
+        const domNode = getDOMNode({ 'data-some' : 'attribute' }).documentElement;
+        Object.keys(domNode.attributes)
+          .filter(i => domNode.attributes[i].name)
+          .map(i => domNode.attributes[i].name)
+          .indexOf('data-some')
+          .should.be.above(-1);
+      });
+    });
 
   });
 }

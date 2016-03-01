@@ -1,14 +1,21 @@
 {
-  "name": "reacted-flex",
-  "version": "1.0.7",
-  "description": "reacted-flex ===",
-  "main": "dist/components/flex.js",
+  "name": "reacted-fontawesome",
+  "version": "0.0.1",
+  "description": "Font Awesome integration in React.",
+  "main": "dist/components/icon.js",
   "scripts": {
     "test": "redtea dist/test.js",
     "babel": "babel --out-dir dist app",
-    "babel-watch": "babel --watch --out-dir dist app"
+    "babel-watch": "babel --watch --out-dir dist app",
+    "webpack": "webpack",
+    "webpack-watch": "webpack --watch",
+    "build": "npm run babel && npm run webpack",
+    "watch": "npm run babel-watch & npm run webpack-watch"
   },
-  "author": "",
+  "author": {
+    "name": "francois",
+    "url": "https://github.com/co2-git"
+  },
   "license": "ISC",
   "dependencies": {
     "react": "^0.14.7",

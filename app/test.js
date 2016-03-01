@@ -6,120 +6,57 @@ import React              from 'react';
 import css                from 'css';
 import { DOMParser }      from 'xmldom';
 import ReactDOMServer     from 'react-dom/server';
-import Flex               from './components/flex';
+import Icon               from './components/icon';
 
 function test(props = {}) {
   const locals = {};
 
+  Object.assign(props, { browser : false });
+
   function getDOMNode (props) {
     const rendered = ReactDOMServer.renderToString(
-      React.createFactory(Flex)(props)
+      React.createFactory(Icon)(props)
     );
 
     return new DOMParser().parseFromString(rendered, 'text/html');
   }
 
-  function check (props = {}, rules = []) {
-    return it => {
-      it('should be a React Component', () => {
-        locals.flex = new Flex(props);
-        locals.flex.should.be.an.instanceof(React.Component);
-      });
+  return describe('reacted-fontawesome', it => {
+    it('should be a class', () => Icon.should.be.a.Function());
 
-      it('should render', () => {
-        locals.rendered = ReactDOMServer.renderToString(
-          React.createFactory(Flex)(props)
-        );
-      });
+    it('<Icon icon="user" size="2" spin={ true } />', it => {
+      it('should have the right classes', it => {
+        const domNode = getDOMNode({
+          icon : 'user',
+          size : 2,
+          spin : true
+        }).documentElement;
 
-      it('should have style', () => {
-        let styleText;
+        let className;
 
-        locals.rendered.replace(/style="(.+);"/, (matches, style) => {
-          styleText = `flex {${style}}`;
-        });
-
-        locals.style = css.parse(styleText).stylesheet;
-
-        // console.log(require('util').inspect(locals.style, { depth: null }));
-      });
-
-      it(`should have ${rules.length} rule(s)`, () =>
-        locals.style.should.be.an.Object()
-          .and.have.property('rules')
-          .which.is.an.Array()
-          .and.have.length(rules.length)
-      );
-
-      rules.forEach((rule, ruleIndex) => {
-        it('selector', it => {
-          it(`should be ${rule.selector}`, () => {
-            locals.style.rules[0].should.have.property('selectors')
-              .which.is.an.Array();
-
-            locals.style.rules[0].selectors[0]
-              .should.be.exactly(rule.selector);
-          });
-        });
-
-        it('declarations', it => {
-          it(`should be ${rule.declarations.length}`, () =>
-            locals.style.rules[0]
-              .should.have.property('declarations')
-              .which.is.an.Array()
-              .and.have.length(rule.declarations.length)
-          );
-
-          rule.declarations.forEach((declaration, declarationIndex) => {
-            it(Object.keys(declaration)[0], it => {
-              it('property', it => {
-                it(`should be "${Object.keys(declaration)[0]}"`, () =>
-                  locals.style.rules[ruleIndex]
-                    .declarations[declarationIndex]
-                    .should.have.property('property')
-                    .which.is.exactly(Object.keys(declaration)[0])
-                );
-              });
-
-              it('value', it => {
-                it(`should be "${declaration[Object.keys(declaration)[0]]}"`, () =>
-                  locals.style.rules[ruleIndex]
-                    .declarations[declarationIndex]
-                    .should.have.property('value')
-                    .which.is.exactly(declaration[Object.keys(declaration)[0]])
-                );
-              });
-            });
-          });
-        });
-      });
-    };
-  }
-
-  return describe('reacted-flex', it => {
-    it('should be a class', () => Flex.should.be.a.Function());
-
-    it('<Flex />', describe.use(() => check(
-      {},
-      [
-        {
-          selector : 'flex',
-          declarations : [
-            { display : 'flex' },
-            { 'flex-direction' : 'row' }
-          ]
+        for ( let i in domNode.attributes ) {
+          if ( domNode.attributes[i].name === 'class' ) {
+            className = domNode.attributes[i].value;
+          }
         }
-      ]
-    )));
 
-    it('<Flex data-some="attribute" />', it => {
-      it('should have attribute', () => {
-        const domNode = getDOMNode({ 'data-some' : 'attribute' }).documentElement;
-        Object.keys(domNode.attributes)
-          .filter(i => domNode.attributes[i].name)
-          .map(i => domNode.attributes[i].name)
-          .indexOf('data-some')
-          .should.be.above(-1);
+        locals.classes = className.split(' ');
+
+        it('should be a font icon', () =>
+          locals.classes.indexOf('fa').should.be.above(-1)
+        );
+
+        it('should be a user icon', () =>
+          locals.classes.indexOf('fa-user').should.be.above(-1)
+        );
+
+        it('should be the right size', () =>
+          locals.classes.indexOf('fa-2x').should.be.above(-1)
+        );
+
+        it('should spin', () =>
+          locals.classes.indexOf('fa-spin').should.be.above(-1)
+        );
       });
     });
 

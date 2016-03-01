@@ -60,10 +60,6 @@ var Icon = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      if (this.props.browser) {
-        require("font-awesome/css/font-awesome.min.css");
-      }
-
       return _react2.default.createElement('i', _extends({}, this.props, { className: this.className() }));
     }
   }]);
@@ -74,7 +70,6 @@ var Icon = function (_React$Component) {
 Icon.propTypes = {
   "icon": _react2.default.PropTypes.string.isRequired,
   "size": _react2.default.PropTypes.number,
-  "spin": _react2.default.PropTypes.bool,
-  "browser": _react2.default.PropTypes.bool
+  "spin": _react2.default.PropTypes.bool
 };
 exports.default = Icon;

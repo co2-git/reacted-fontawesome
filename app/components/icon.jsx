@@ -7,8 +7,7 @@ class Icon extends React.Component {
   static propTypes      =     {
     "icon"              :     React.PropTypes.string.isRequired,
     "size"              :     React.PropTypes.number,
-    "spin"              :     React.PropTypes.bool,
-    "browser"           :     React.PropTypes.bool
+    "spin"              :     React.PropTypes.bool
   };
 
   className () {
@@ -34,10 +33,6 @@ class Icon extends React.Component {
   }
 
   render () {
-    if ( this.props.browser ) {
-      require("font-awesome/css/font-awesome.min.css");
-    }
-
     return (
       <i { ...this.props } className={ this.className() }></i>
     );

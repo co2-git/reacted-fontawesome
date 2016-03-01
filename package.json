@@ -6,11 +6,7 @@
   "scripts": {
     "test": "redtea dist/test.js",
     "babel": "babel --out-dir dist app",
-    "babel-watch": "babel --watch --out-dir dist app",
-    "webpack": "webpack",
-    "webpack-watch": "webpack --watch",
-    "build": "npm run babel && npm run webpack",
-    "watch": "npm run babel-watch & npm run webpack-watch"
+    "babel-watch": "babel --watch --out-dir dist app"
   },
   "author": {
     "name": "francois",
